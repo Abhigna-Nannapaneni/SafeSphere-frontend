@@ -11,6 +11,9 @@ import {
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
+// Use environment variable for API URL - this works in both local and Kubernetes
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+
 function VolunteerAuth() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -67,8 +70,9 @@ function VolunteerAuth() {
         };
 
         console.log("Login API call:", loginData);
+        console.log("API Base URL:", API_BASE_URL);
 
-        const res = await fetch("http://localhost:8080/api/volunteer/login", {
+        const res = await fetch(`${API_BASE_URL}/api/volunteer/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(loginData),
@@ -103,8 +107,9 @@ function VolunteerAuth() {
         };
 
         console.log("Signup API call:", signupData);
+        console.log("API Base URL:", API_BASE_URL);
 
-        const res = await fetch("http://localhost:8080/api/volunteer/signup", {
+        const res = await fetch(`${API_BASE_URL}/api/volunteer/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(signupData),
